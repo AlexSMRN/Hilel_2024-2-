@@ -1,0 +1,227 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F3F5F6;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url("../fonts/Inter-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url("../fonts/Inter-Bold.ttf");
+    font-weight: 700;
+}
+
+.container {
+    max-width: 100%;
+    justify-content: space-between;
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.text {
+    max-width: 390px;
+    min-width: 390px;
+    left: 12vw;
+    z-index: 1;
+}
+
+.text p:first-of-type {
+    padding-top: 32px;
+    font-size: 20px;
+}
+
+.text p:nth-child(3) {
+    color: #3C3C43;
+    font-size: 14px;
+    padding-top: 8px;
+}
+
+#man3 {
+    max-height: 465px;
+}
+
+.images {
+    gap: 30px;
+    max-height: 358px;
+}
+
+#man2 {
+    width: 282px;
+}
+
+input:is([type="button"], [type="submit"], [type="reset"]),
+input[type="file"]::file-selector-button,
+button {
+    padding: 0;
+}
+
+
+.arrows {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 30px;
+}
+
+.arrows img {
+    display: block;
+}
+
+.play-button {
+    left: 1rem;
+    bottom: 1rem;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+@media screen and (max-width: 1380px) {
+    text {
+        left: 15%;
+    }
+
+    .image {
+        margin-right: 30px;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    #man1 {
+        display: none;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .image {
+        margin-right: 40px;
+    }
+
+    #man2 {
+        margin-right: 24px;
+    }
+
+    .arrows {
+        transform: translateX(-54%);
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .text {
+        left: 20%;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .text {
+        left: 25%;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .text {
+        left: 30%;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .text {
+        left: 30%;
+        transform: translateX(-20%);
+        position: absolute;
+        font-size: 18px;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 32px;
+    }
+
+    #man3 {
+        max-height: 428px;
+        margin: 0 auto;
+        position: relative;
+        bottom: 0;
+        top: 0;
+    }
+
+    .image {
+        margin: 0;
+    }
+
+    .images {
+        flex-direction: row;
+        justify-content: center;
+        order: 1;
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+    .arrows {
+        gap: 10px;
+    }
+
+    .images img {
+        max-height: 208px;
+        max-width: 166px;
+    }
+
+    #man1 {
+        display: block;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+}
