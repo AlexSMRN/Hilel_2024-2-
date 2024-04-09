@@ -1,69 +1,91 @@
-const latestLogged = logedUsers.reduce((acc, curr) => {
-    if (!acc || new Date(curr.last_login) > new Date(acc.last_login)) {
-        return curr;
+console.log('It works!');
+
+const form = document.getElementById('timerForm');
+const count = document.getElementById('timerCount');
+const result = document.getElementById('result');
+const startBtn = document.getElementById('startBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const resumeBtn = document.getElementById('resumeBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+let intervalId;
+let countValue;
+let paused = false;
+
+function startTimer() {
+    intervalId = setInterval(() => {
+        if (countValue > 0) {
+            countValue--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(intervalId);
+            clearBtn.style.display = 'inline-block';
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(intervalId);
+    paused = true;
+    resumeBtn.style.display = 'inline-block';
+    pauseBtn.style.display = 'none';
+}
+
+function resumeTimer() {
+    startTimer();
+    paused = false;
+    resumeBtn.style.display = 'none';
+    pauseBtn.style.display = 'inline-block';
+}
+
+function updateTimerDisplay() {
+    const hours = Math.floor(countValue / 3600);
+    const minutes = Math.floor((countValue % 3600) / 60);
+    const seconds = countValue % 60;
+    let displayValue = '';
+
+    if (hours > 0) {
+        displayValue += `${hours} h : ${minutes < 10 ? '0' : ''}${minutes} m : ${seconds < 10 ? '0' : ''}${seconds} s `;
+    } else if (minutes > 0) {
+        displayValue += `${minutes} m : ${seconds < 10 ? '0' : ''}${seconds} s `;
     } else {
-        return acc;
+        displayValue += `${seconds} s `;
+    }
+
+    result.innerHTML = displayValue;
+}
+
+startBtn.addEventListener('click', () => {
+    countValue = parseInt(count.value); 
+    if (countValue > 0 && !intervalId) {
+        clearInterval(intervalId);
+        updateTimerDisplay();
+        startTimer();
+        startBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline-block';
+        clearBtn.style.display = 'inline-block';
     }
 });
 
-const oldestLogged = logedUsers.reduce((acc, curr) => {
-    if (!acc || new Date(curr.last_login) < new Date(acc.last_login)) {
-        return curr;
+pauseBtn.addEventListener('click', () => {
+    if (!paused) {
+        pauseTimer();
     } else {
-        return acc;
+        resumeTimer();
     }
 });
 
-console.log("the latest logged user:",latestLogged);
-console.log("the oldest logged user:", oldestLogged);
-
-
-const youngest = generalUsers.reduce((acc, curr) => {
-    if (!acc || curr.age < acc.age) {
-        return curr;
-    } else {
-        return acc
-    }
+resumeBtn.addEventListener('click', () => {
+    resumeTimer();
 });
 
-const oldest = generalUsers.reduce((acc, curr) => {
-    if (!acc || curr.age > acc.age) {
-        return curr;
-    } else {
-        return acc
-    }
+clearBtn.addEventListener('click', () => {
+    clearInterval(intervalId);
+    count.value = '';
+    result.innerHTML = '0';
+    clearBtn.style.display = 'none';
+    resumeBtn.style.display = 'none';
+    startBtn.style.display = 'inline-block';
+    intervalId = null;
+    countValue = 0;
 });
-
-const totalAge = generalUsers.reduce((acc, user) => acc + user.age, 0)
-const middleAge = Math.floor(totalAge / generalUsers.length)
-
-console.log("middle age:", middleAge);
-
-let ageDifference = generalUsers.forEach(user => {
-    user.ageDifference = Math.abs(user.age - middleAge)
-});
-
-const sorted = generalUsers.sort((a,b) => a.ageDifference - b.ageDifference)
-
-const closest = sorted.slice(0,16)
-
-const wrapper = document.querySelector(".box-wrapper")
-
-closest.forEach(item => {
-    const cardContainer = document.createElement("div")
-    cardContainer.classList.add("card")
-
-    cardContainer.innerHTML = `<img src ="${item.image}" alt = "${item.username}">`
-
-    const cardInfo = document.createElement("div")
-    cardInfo.classList.add("info")
-    cardInfo.innerHTML = `<p>Name : ${item.firstName} ${item.lastName}</p>
-    <p>Age : ${item.age}</p>
-    <p>Email : <a href = "mailto: ${item.email}" >${item.email}</a></p>
-    <p>City : ${item.address.city} </p>
-    <p>Phone :<a href = "tel:${item.phone}">${item.phone}</a> </p>`
-
-    cardContainer.append(cardInfo)
-    wrapper.append(cardContainer)
-
-})
